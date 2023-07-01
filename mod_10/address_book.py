@@ -14,13 +14,14 @@ class Record:
         self.phones = []
 
     def add_phone(self, phone):
-        pass
+        self.phones.append(phone)
 
-    def edit_phone(self, phone):
-        pass
+    def edit_phone(self, phone, new_phone):
+        i = self.phones.index(phone)
+        self.phones[i] = new_phone
     
     def del_phone(self, phone):
-        pass
+        self.phones.remove(phone)
     
 
 
