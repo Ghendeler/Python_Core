@@ -2,12 +2,9 @@ from collections import UserDict
 
 
 class AddressBook(UserDict):
-    
-    def __init__(self) -> None:
-        pass
 
-    def add_record(self, Record):
-        self.data[Record.name.value] = Record
+    def add_record(self, record):
+        self.data[record.name.value] = record
 
 
 class Record:
@@ -28,9 +25,7 @@ class Record:
 
 
 class Field:
-
-    def __init__(self) -> None:
-        pass
+    pass
 
 
 class Name(Field):
