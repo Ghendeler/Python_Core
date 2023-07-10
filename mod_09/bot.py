@@ -19,21 +19,33 @@ def input_error(func):
 
 
 def pars_request(string):
-    key = None
-    for i in ACTION.keys():
-        if string.lower().startswith(i):
-            key = i
-            string = string[len(key):].strip()
+    handler = None
+    for key in ACTION.keys():
+        if string.lower().startswith(key):
+            handler = key
             break   
-    string = string.strip().split(' ') if len(string) else [0]
-    if not key:
-        return {}
+    if not handler:
+        return None
     else:
-        return {key: string[:2]}
+        string = string[len(key):].strip().split(' ')
+        return {handler: string[:2]}
+    
+# def pars_request(string):
+#     key = None
+#     for i in ACTION.keys():
+#         if string.lower().startswith(i):
+#             key = i
+#             string = string[len(key):].strip()
+#             break   
+#     string = string.strip().split(' ') if len(string) else [0]
+#     if not key:
+#         return {}
+#     else:
+#         return {key: string[:2]}
   
 
 @input_error
-def hello(x):
+def hello(*args):
     return "How can I help you?"
 
 
@@ -66,7 +78,7 @@ def phone(name=None):
 
 
 @input_error
-def show_all(x):
+def show_all(*args):
     result = ''
     for k, v in phone_book.items():
         result += f'{k}: {v}\n' 
@@ -74,14 +86,14 @@ def show_all(x):
 
 
 @input_error
-def help(x):
+def help(*args):
     return '''"hello" for greating
 "add"\n"change"\n"phone"
 "show all"\n"help"
 "good bye", "close" or "exit" for end'''
 
 @input_error
-def exit(x):
+def exit(*args):
     raise SystemExit
 
 
@@ -105,12 +117,21 @@ def get_action_handler(action):
 @input_error
 def action(data):
     parsed = pars_request(data)
-    if parsed == {}:
+    if not parsed:
         raise IndexError
     for k, v in parsed.items():
         action_handler = get_action_handler(k)
         result = action_handler(*v)
     return result
+
+# def action(data):
+#     parsed = pars_request(data)
+#     if parsed == {}:
+#         raise IndexError
+#     for k, v in parsed.items():
+#         action_handler = get_action_handler(k)
+#         result = action_handler(*v)
+#     return result
 
 
 def main():
